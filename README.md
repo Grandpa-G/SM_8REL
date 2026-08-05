@@ -2,6 +2,8 @@
 
 [![megaind-rpi](res/sequent.jpg)](https://www.sequentmicrosystems.com)
 
+![Eight Relays 4A/120V 8-Layer Stackable HAT](res/8-REL-V6-03.png)
+
 Arduino library for Sequent Microsystems [Eight Relays 8-Layer Stackable HAT for Raspberry Pi](https://sequentmicrosystems.com/products/four-relays-four-inputs-for-raspberry-pi)
 
 ## Install
