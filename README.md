@@ -4,7 +4,7 @@
 
 ![Eight Relays 4A/120V 8-Layer Stackable HAT](res/8-REL-V6-03.jpg)
 
-Arduino library for Sequent Microsystems [Eight Relays 8-Layer Stackable HAT for Raspberry Pi](https://sequentmicrosystems.com/products/four-relays-four-inputs-for-raspberry-pi)
+Arduino library for Sequent Microsystems [Eight Relays 8-Layer Stackable HAT for Raspberry Pi](https://sequentmicrosystems.com/products/eight-relays-stackable-card-for-raspberry-pi)
 
 ## Install
 ### Library manager
