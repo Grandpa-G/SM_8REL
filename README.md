@@ -1,4 +1,7 @@
 # SM_8rel-Library
+
+[![megaind-rpi](res/sequent.jpg)](https://www.sequentmicrosystems.com)
+
 Arduino library for Sequent Microsystems [Eight Relays 8-Layer Stackable HAT for Raspberry Pi](https://sequentmicrosystems.com/products/four-relays-four-inputs-for-raspberry-pi)
 
 ## Install
@@ -80,80 +83,11 @@ In your sketchbook set the board type to DOIT ESP32 DEVKIT V1: Tool >> Board >> 
 	 * @return Returns true if successful
 	 */
 	bool writeRelay(uint8_t val);
-
-    /*!
-	 * @brief Read optically isolated ports as a bitmap.
-	 * @return the state of all opto inputs
-	 */
-	int readOpto();
-
-	/*!
-	 * @brief Read one optically isolated channel.
-	 * @param channel [1..8]
-	 * @return the state of one  optically isolated channel
-	 */
-	bool readOpto(uint8_t channel);
-	
-	/*!
-	 * @brief Read optically isolated ports as a bitmap, when signal is AC.
-	 * @return the state of all opto inputs, filtred.
-	 */
-	int readOptoAC();
-
-	/*!
-	 * @brief Read one optically isolated channel, when signal is AC.
-	 * @param channel [1..8]
-	 * @return the state of one  optically isolated channel, filtred to detect AC signals
-	 */
-	bool readOptoAC(uint8_t channel);
 	
 	 /*!
 	 * @brief Read button current state.
 	 * @return true - pushed; false - released.
 	 */
 	bool readButton();
-	
-	/*!
-	 * @brief Enable/Disable the counting function for one input channel
-	 * @param channel -  Input channel number 1..4 as are printed on the card
-	 * @param val The new state of the counting function settings, true: enabled, false: disabled
-	 * @return Returns true if successful
-	 */
-	bool cfgCount(uint8_t channel, bool val);
-
-	/*!
-	 * @brief Enable/Disable the counting function for all inputs as a 4 bits bitmap (1-enable, 0-disable for each channel)
-	 * @param val The bitmap of the counting function states
-	 * @return Returns true if successful
-	 */
-	bool cfgCount(uint8_t val);
-	
-	/*!
-	 * @brief Read the counter for a channel
-	 * @param channel -  Input channel number 1..8 as are printed on the card
-	 * @return number of transitions counted for the respective channel.
-	 */
-	int readCounter(uint8_t channel);
-	
-	/*!
-	 * @brief Reset the acumulated transitions count for a channel
-	 * @param channel -  Input channel number 1..8 as are printed on the card
-	 * @return Returns true if successful
-	 */
-	bool resetCounter(uint8_t channel);
-	
-	/*!
-	 * @brief Read the fill factor for a PWM signal aplyed to an input channel
-	 * @param channel -  Input channel number 1..8 as are printed on the card
-	 * @return fill factor 0 .. 100.
-	 */
-	float readFill(uint8_t channel);
-	
-	/*!
-	 * @brief Read the frequency for a signal aplyed to an input channel
-	 * @param channel -  Input channel number 1..8 as are printed on the card
-	 * @return frequency in Hz
-	 */
-	int readFrequency(uint8_t channel);
 	
 	
