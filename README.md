@@ -19,7 +19,7 @@ This method lets the Arduino IDE unpack and position the library files for you a
 Open an arduino sketch, go to File > Examples > SM_8RELAY > and chose your example to run.
 
 ## Usage
-There are three ways to control the Four Relays four HV Inputs Card from the Arduino environment.
+There are three ways to control the Eight Relays Card from the Arduino environment.
 
 ### Method 1: Using any Arduino controller
 You can use this method with any Arduino card with an I2C port by connecting I2C-SDA, I2C-SCL, +5V and GND, as shown in the following table.
@@ -48,10 +48,10 @@ You can use this method with any Arduino card with an I2C port by connecting I2C
 |GND |--39|O - O|40--||
  
 ### Method 2: Using the SM Arduino Raspberry Pi Replacement Kit
-Sequent Microsystems [Arduino Uno, Nano, Teensy, Feather or ESP32 Raspberry Pi Replacement Kit](https://sequentmicrosystems.com/products/raspberry-pi-replacement-card) is an inexpensive adapter which can be used to control any of our HATs using Uno, Nano, Teensy, Feather or ESP32. Plug the Four Relays four HV Inputs HAT into the 40 pin connector of the adapter and write your Arduino software.
+Sequent Microsystems [Arduino Uno, Nano, Teensy, Feather or ESP32 Raspberry Pi Replacement Kit](https://sequentmicrosystems.com/products/raspberry-pi-replacement-card) is an inexpensive adapter which can be used to control any of our HATs using Uno, Nano, Teensy, Feather or ESP32. Plug the Eight Relays HAT into the 40 pin connector of the adapter and write your Arduino software.
 
 ### Method 3: Using the [SM ESP32-Pi Raspberry Pi Alternative Card](https://sequentmicrosystems.com/collections/all-io-cards/products/esp32-pi-low-cost-replacement-for-raspberry-pi)
-ESP32-Pi is a Raspberry Pi alternate solution which can control directly the Four Relays four HV Inputs HAT.
+ESP32-Pi is a Raspberry Pi alternate solution which can control directly the Eight Relays HAT.
 In your sketchbook set the board type to DOIT ESP32 DEVKIT V1: Tool >> Board >> ESP32 Arduino >> DOIT ESP32 DEVKIT V1
 
 ## Function prototypes
