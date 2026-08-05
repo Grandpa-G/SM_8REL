@@ -1,4 +1,4 @@
-# Sequent-SM_8rel-Library
+# SM_8rel-Library
 Arduino library for Sequent Microsystems [Four Relays four HV Inputs 8-Layer Stackable HAT for Raspberry Pi](https://sequentmicrosystems.com/products/four-relays-four-inputs-for-raspberry-pi)
 
 ## Install
@@ -52,7 +52,7 @@ In your sketchbook set the board type to DOIT ESP32 DEVKIT V1: Tool >> Board >> 
  	 * @brief Class constructor
 	 * @param stack - The stack level of the card, choosed with the jumpers
 	 */
-	SM_8rel(uint8_t stack = 0);
+	SM_8REL(uint8_t stack = 0);
  
 	/*!
 	 * @brief Check card presence
