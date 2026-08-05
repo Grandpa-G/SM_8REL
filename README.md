@@ -10,10 +10,13 @@ Arduino library for Sequent Microsystems [Eight Relays 8-Layer Stackable HAT for
 ### Library manager
 Go to **Tools**>>**Manage Libraries..** menu and search for *SM_8RELAY* and click install 
 ### Manual install
-To download click <>Code > [Download ZIP](https://github.com/SequentMicrosystems/Sequent-SM_8rel-Library/archive/refs/heads/main.zip) button from the main [page](https://github.com/SequentMicrosystems/Sequent-SM_8rel-Library), rename the uncompressed folder to "SM_8RELAY" 
-and copy to the libraries subdirectory of your sketchbook directory ("This PC > Documents > Arduino > libraries" for a Windows PC
- or "Home > arduino > libraries" on Linux PC). Now launch the Arduino environment. If you open the Sketch > Include Library menu, you should see SM_8RELAY inside. 
- The library will be compiled with sketches that use it. Open an arduino sketch, go to File > Examples > SM_8RELAY > and chose your example to run.
+This method lets the Arduino IDE unpack and position the library files for you automatically. 
+1. Download the library as a ZIP file (e.g., from GitHub). 
+2. Do not unzip it.Open the Arduino IDE.In the top menu, navigate to Sketch > Include Library > Add .ZIP Library.
+3. Browse to your computer's Downloads folder, select the .zip file, and click Open.
+4. The IDE will install the library. You can now inclusion-check it under Sketch > Include Library. 
+
+Open an arduino sketch, go to File > Examples > SM_8RELAY > and chose your example to run.
 
 ## Usage
 There are three ways to control the Four Relays four HV Inputs Card from the Arduino environment.
