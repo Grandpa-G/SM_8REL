@@ -4,13 +4,13 @@ extern "C" {
 
 #include "Arduino.h"
 #include "Wire.h"
-#include "SM_8REL8.h"
+#include "SM_8REL.h"
 
 
 
 
 
-SM_8REL8::SM_8REL8(uint8_t stack)
+SM_8REL::SM_8REL(uint8_t stack)
 {
 		if (stack < 0)
 		stack = 0;
@@ -20,7 +20,7 @@ SM_8REL8::SM_8REL8(uint8_t stack)
 	_detected = false;
 }
 
-bool SM_8REL8::begin()
+bool SM_8REL::begin()
 {
 	Serial.println(_hwAdd, HEX);
 	uint16_t value = 0;
@@ -34,13 +34,13 @@ bool SM_8REL8::begin()
 	return _detected;
 }
 
-bool SM_8REL8::isAlive()
+bool SM_8REL::isAlive()
 {
 	return _detected;
 }
 
 
-bool SM_8REL8::writeRelay(uint8_t relay, bool val)
+bool SM_8REL::writeRelay(uint8_t relay, bool val)
 {
 	if (relay > RELAY_CH_NO || relay == 0)
 	{
@@ -59,7 +59,7 @@ bool SM_8REL8::writeRelay(uint8_t relay, bool val)
 	return false;
 }
 
-bool SM_8REL8::writeRelay(uint8_t val)
+bool SM_8REL::writeRelay(uint8_t val)
 {
 	if (OK == writeByte(I2C_MEM_RELAY_VAL, 0x0f & val))
 		return true;
@@ -67,7 +67,7 @@ bool SM_8REL8::writeRelay(uint8_t val)
 }
 
 
-bool SM_8REL8::readButton()
+bool SM_8REL::readButton()
 {
 	int ret = 0;
 	uint8_t val = 0;
@@ -85,7 +85,7 @@ bool SM_8REL8::readButton()
  ***************** 8mosfet_I2C access functions ****************************
  **********************************************************************
  */
- int SM_8REL8::writeByte(uint8_t add, uint8_t value)
+ int SM_8REL::writeByte(uint8_t add, uint8_t value)
 {
 	//Wire.begin();
 	Wire.beginTransmission(_hwAdd);
@@ -94,7 +94,7 @@ bool SM_8REL8::readButton()
 	return Wire.endTransmission();
 }
 
-int SM_8REL8::writeWord(uint8_t add, uint16_t value)
+int SM_8REL::writeWord(uint8_t add, uint16_t value)
 {
 	uint8_t buff[2];
 
@@ -108,7 +108,7 @@ int SM_8REL8::writeWord(uint8_t add, uint16_t value)
 
 }
 
-int SM_8REL8::writeDWord(uint8_t add, uint32_t value)
+int SM_8REL::writeDWord(uint8_t add, uint32_t value)
 {
 	uint8_t buff[4];
 	int i = 0;
@@ -125,7 +125,7 @@ int SM_8REL8::writeDWord(uint8_t add, uint32_t value)
 
 }
 
-int SM_8REL8::readByte(uint8_t add, uint8_t *value)
+int SM_8REL::readByte(uint8_t add, uint8_t *value)
 {
 	if (0 == value)
 	{
@@ -150,7 +150,7 @@ int SM_8REL8::readByte(uint8_t add, uint8_t *value)
 	return 0;
 }
 
-int SM_8REL8::readWord(uint8_t add, uint16_t *value)
+int SM_8REL::readWord(uint8_t add, uint16_t *value)
 {
 	uint8_t buff[2];
 
@@ -179,7 +179,7 @@ int SM_8REL8::readWord(uint8_t add, uint16_t *value)
 	return 0;
 }
 
-int SM_8REL8::readDWord(uint8_t add, uint32_t *value)
+int SM_8REL::readDWord(uint8_t add, uint32_t *value)
 {
 	uint8_t buff[4];
 	int i = 0;
