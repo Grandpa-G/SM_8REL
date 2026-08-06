@@ -18,7 +18,7 @@
 #ifndef ___
 #define ___
 
-#define SLAVE_OWN_ADDRESS_BASE 0x0e
+#define SLAVE_OWN_ADDRESS_BASE 0x27
 
 #define RELAY_CH_NO 8
 #define IN_CH_NO 8
