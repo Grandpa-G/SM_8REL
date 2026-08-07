@@ -44,39 +44,38 @@
 */
 #include "SM_8REL.h"
 
-SM_8REL card(0);// Eight Relays HAT with stack level 0 (no jumpers installed)
+SM_8REL card = SM_8REL(0);  // Eight Relays HAT with stack level 0 (no jumpers installed)
 
 void setup() {
   Serial.begin(115200);
   delay(2000);
 
-  if (card.begin() )
-  {
+  if (card.begin()) {
     Serial.print("Eight Relays Card detected\n");
-  }
-  else
-  {
+  } else {
     Serial.print("Eight Relays Card NOT detected!\n");
   }
-
 }
 
 void loop() {
-  if (card.isAlive() )
-  {
-	if(card.readButton())
-	{		
-      for (int i = 1; i < 9; i++)
-      {
-        card.writeRelay(i, 1);
-        delay(250);
-      }
-      for (int i = 1; i < 9; i++)
-      {
-        card.writeRelay(i, 0);
-        delay(250);
-      }
-	}
-    delay(250);
+  static bool keepLooping = true;
+  int i = 0;
+
+  if (keepLooping) {
+    // put your main code here, to run repeatedly:
+    for (i = 1; i < 9; i++)  //turn relays ON, one by one
+    {
+      card.writeRelay(i, 1);
+      delay(250);
+    }
+
+    delay(1000);
+    for (i = 1; i < 9; i++)  //turn relays OFF, one by one
+    {
+      card.writeRelay(i, 0);
+      delay(250);
+    }
+
+    keepLooping = false;
   }
 }

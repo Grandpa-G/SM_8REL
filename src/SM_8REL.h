@@ -86,25 +86,25 @@ const uint8_t mosfetsRemap[8] =
 /*!
  * @brief SM_SM_8REL class
  */
-class SM_8REL
-{
-public:
+	class SM_8REL
+	{
+		public:
 	/*!
 	 * @brief Class constructor.
 	 */
-	SM_8REL(uint8_t stack = 0);
+			SM_8REL(uint8_t stack = 0);
 
 	/*!
 	 * @brief Check card presence
 	 * @return Returns true is successful
 	 */
-	bool begin();
+			bool begin();
 
 	/*!
 	 * @brief Return card existance status
 	 * @return Returns true if card is present
 	 */
-	bool isAlive();
+			bool isAlive();
 
 		/*!
 	 * @brief Set one relay state
@@ -112,36 +112,42 @@ public:
 	 * @param val The new state of the relay, true: energised
 	 * @return Returns true if successful
 	 */
-	bool writeRelay(uint8_t relay, bool val);
+			bool writeRelay(uint8_t relay, bool val);
 
 	/*!
 	 * @brief Write all relays state as a 4 bits bitmap
 	 * @param val The bitmap of the relays states
 	 * @return Returns true if successful
 	 */
-	bool writeRelay(uint8_t val);
+			bool writeRelay(uint8_t val);
 
-    /*!
+	/*!
 	 * @brief Read optically isolated ports as a bitmap.
 	 * @return the state of all opto inputs
 	 */
 
-	
+
 	 /*!
 	 * @brief Read button current state.
 	 * @return true - pushed; false - released.
 	 */
-	bool readButton();
-	
-	 
-private:
-	uint8_t _hwAdd;
-	bool _detected;
-	int writeByte(uint8_t add, uint8_t value);
-	int writeWord(uint8_t add, uint16_t value);
-	int writeDWord(uint8_t add, uint32_t value);
-	int readByte(uint8_t add, uint8_t* value);
-	int readWord(uint8_t add, uint16_t* value);
-	int readDWord(uint8_t add, uint32_t* value);
-};
+			bool readButton();
+
+
+		private:
+			uint8_t _hwAdd;
+			bool _detected;
+			uint8_t relayMaskRemap[8] = {0x01, 0x04, 0x40, 0x10, 0x20, 0x80, 0x08, 0x02};
+ 
+			uint8_t relayToIO(uint8_t relay);
+			uint8_t IOToRelay(uint8_t iov);
+uint8_t check();
+
+			int writeByte(uint8_t add, uint8_t value);
+			int writeWord(uint8_t add, uint16_t value);
+			int writeDWord(uint8_t add, uint32_t value);
+			int readByte(uint8_t add, uint8_t* value);
+			int readWord(uint8_t add, uint16_t* value);
+			int readDWord(uint8_t add, uint32_t* value);
+	};
 #endif // ___

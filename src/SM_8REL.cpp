@@ -1,4 +1,5 @@
-extern "C" {
+extern "C"
+{
 #include <inttypes.h>
 }
 
@@ -6,17 +7,18 @@ extern "C" {
 #include "Wire.h"
 #include "SM_8REL.h"
 
-
-
-
+#define RELAY8_INPORT_REG_ADD 0x00
+#define RELAY8_OUTPORT_REG_ADD 0x01
+#define RELAY8_POLINV_REG_ADD 0x02
+#define RELAY8_CFG_REG_ADD 0x03
 
 SM_8REL::SM_8REL(uint8_t stack)
 {
-		if (stack < 0)
+	if (stack < 0)
 		stack = 0;
 	if (stack > 7)
 		stack = 7;
-	_hwAdd = SLAVE_OWN_ADDRESS_BASE + stack;//(stack ^ 0x07);
+	_hwAdd = SLAVE_OWN_ADDRESS_BASE + stack; //(stack ^ 0x07);
 	_detected = false;
 }
 
@@ -29,7 +31,6 @@ bool SM_8REL::begin()
 	{
 		_detected = true;
 	}
-		Serial.println(_detected);
 
 	return _detected;
 }
@@ -40,32 +41,92 @@ bool SM_8REL::isAlive()
 }
 
 
+uint8_t SM_8REL::relayToIO(uint8_t relay)
+{
+    uint8_t val = 0;
+	for(int i=0; i< 8; i++)
+	{        if((relay & (1 << i)) != 0)
+            val = val + relayMaskRemap[i];
+	}
+    return val;
+}
+
+uint8_t SM_8REL::IOToRelay(uint8_t iov)
+{
+   uint8_t val = 0;
+	for(int i=0; i< 8; i++)
+	{
+        if((iov & relayMaskRemap[i]) != 0)
+            val = val + (1 << i);
+	}
+    return val;
+}
+
+uint8_t SM_8REL::check()
+{
+ 	uint8_t value = 0;
+	uint8_t ret = 0;
+
+	uint8_t cfg =0;
+	// bus.read_byte_data(add, RELAY8_CFG_REG_ADD)
+		ret = readByte(RELAY8_CFG_REG_ADD, &cfg);
+
+    if( cfg != 0)
+	{
+		writeByte(RELAY8_OUTPORT_REG_ADD,  0);
+		writeByte(RELAY8_CFG_REG_ADD, 0);
+	}
+	ret = readByte(RELAY8_INPORT_REG_ADD, &value);
+	return value;
+}
+
 bool SM_8REL::writeRelay(uint8_t relay, bool val)
 {
+	bool ret = false;
+	uint8_t value = 0;
+	uint8_t mask = 0;
+
 	if (relay > RELAY_CH_NO || relay == 0)
 	{
 		return false;
 	}
+
+	     uint8_t oldVal = check();
+    oldVal = IOToRelay(oldVal);
+
 	if (val)
 	{
-		if (0 == writeByte(I2C_MEM_RELAY_SET, relay))
-			return true;
+            oldVal = oldVal | (1 << (relay - 1));
+            oldVal = relayToIO(oldVal);
+			if (0 == writeByte(RELAY8_OUTPORT_REG_ADD, oldVal))
+		{
+			ret = true;
+			delay(100);
+		}
 	}
 	else
 	{
-		if (0 == writeByte(I2C_MEM_RELAY_CLR, relay))
-			return true;
+            oldVal = oldVal & (~(1 << (relay - 1)));
+            oldVal = relayToIO(oldVal);
+			if (0 == writeByte(RELAY8_OUTPORT_REG_ADD, oldVal))
+		{
+			ret = true;
+			delay(100);
+		}
 	}
-	return false;
+
+	return ret;
 }
 
 bool SM_8REL::writeRelay(uint8_t val)
 {
-	if (OK == writeByte(I2C_MEM_RELAY_VAL, 0x0f & val))
-		return true;
+	if (OK == writeByte(I2C_MEM_RELAY_SET, 0x0f & val))
+{
+			delay(100);
+	return true;
+}
 	return false;
 }
-
 
 bool SM_8REL::readButton()
 {
@@ -73,9 +134,10 @@ bool SM_8REL::readButton()
 	uint8_t val = 0;
 
 	ret = readByte(I2C_MEM_BUTTON, &val);
+
 	if (ret < 0)
 		return false;
-	if(val & 1)
+	if (val & 1)
 	{
 		return true;
 	}
@@ -85,9 +147,9 @@ bool SM_8REL::readButton()
  ***************** 8mosfet_I2C access functions ****************************
  **********************************************************************
  */
- int SM_8REL::writeByte(uint8_t add, uint8_t value)
+int SM_8REL::writeByte(uint8_t add, uint8_t value)
 {
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	Wire.write(value);
@@ -99,13 +161,12 @@ int SM_8REL::writeWord(uint8_t add, uint16_t value)
 	uint8_t buff[2];
 
 	memcpy(buff, &value, 2);
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	Wire.write(buff[0]);
 	Wire.write(buff[1]);
 	return Wire.endTransmission();
-
 }
 
 int SM_8REL::writeDWord(uint8_t add, uint32_t value)
@@ -114,7 +175,7 @@ int SM_8REL::writeDWord(uint8_t add, uint32_t value)
 	int i = 0;
 
 	memcpy(buff, &value, 4);
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	for (i = 0; i < 4; i++)
@@ -122,7 +183,6 @@ int SM_8REL::writeDWord(uint8_t add, uint32_t value)
 		Wire.write(buff[i]);
 	}
 	return Wire.endTransmission();
-
 }
 
 int SM_8REL::readByte(uint8_t add, uint8_t *value)
@@ -131,7 +191,7 @@ int SM_8REL::readByte(uint8_t add, uint8_t *value)
 	{
 		return -1;
 	}
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	if (Wire.endTransmission() != 0)
@@ -158,7 +218,7 @@ int SM_8REL::readWord(uint8_t add, uint16_t *value)
 	{
 		return -1;
 	}
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	if (Wire.endTransmission() != 0)
@@ -188,7 +248,7 @@ int SM_8REL::readDWord(uint8_t add, uint32_t *value)
 	{
 		return -1;
 	}
-	//Wire.begin();
+	// Wire.begin();
 	Wire.beginTransmission(_hwAdd);
 	Wire.write(add);
 	if (Wire.endTransmission() != 0)
@@ -210,6 +270,3 @@ int SM_8REL::readDWord(uint8_t add, uint32_t *value)
 	memcpy(value, buff, 4);
 	return 0;
 }
-
- 
- 
